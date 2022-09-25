@@ -52,6 +52,7 @@ class ShowRecipeSerializer(serializers.ModelSerializer):
     is_in_shopping_cart = serializers.SerializerMethodField()
 
     class Meta:
+
         model = Recipe
         fields = ('id', 'tags', 'author',
                   'ingredients', 'is_favorited', 'is_in_shopping_cart',
@@ -196,7 +197,7 @@ class FavoriteSerializer(serializers.ModelSerializer):
                 recipe=data['recipe']
         ).exists():
             raise serializers.ValidationError({
-                'status': 'Уже добавлен'
+                'status': 'Рецепт уже добавлен в избранное '
             })
         return data
 
@@ -214,14 +215,6 @@ class ShoppingListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShoppingList
         fields = ('user', 'recipe')
-
-    def validate(self, data):
-        user = data['user']
-        recipe_id = data['recipe'].id
-        if ShoppingList.objects.filter(user=user,
-                                       recipe__id=recipe_id).exists():
-            raise serializers.ValidationError('Рецепт уже добавлен в список покупок!')
-        return data
 
     def to_representation(self, instance):
         request = self.context.get('request')
