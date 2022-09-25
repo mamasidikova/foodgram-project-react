@@ -1,12 +1,11 @@
-from rest_framework import serializers
-
-from .models import User, Tag, Recipe, Ingredient, IngredientInRecipe, Favorite, ShoppingList
-
 import base64
 
 from django.core.files.base import ContentFile
-
+from rest_framework import serializers
 from users.serializers import CustomUserSerializer
+
+from .models import (Favorite, Ingredient, IngredientInRecipe, Recipe,
+                     ShoppingList, Tag, User)
 
 
 class TagsSerializer(serializers.ModelSerializer):
@@ -95,13 +94,11 @@ class AddRecipeSerializer(serializers.ModelSerializer):
     tags = serializers.PrimaryKeyRelatedField(queryset=Tag.objects.all(),
                                               many=True)
     image = Base64ImageField()
-    # author = CustomUserSerializer(read_only=True)
 
     class Meta:
         model = Recipe
         fields = ('id', 'ingredients', 'tags', 'image',
                   'name', 'image', 'text', 'cooking_time')
-        # read_only_fields = ('author',)
 
     def validate_ingredients(self, data):
         ingredients_list = []

@@ -1,17 +1,18 @@
-from urllib import request
-from rest_framework import permissions, viewsets
-
-from .models import Tag, Recipe, Ingredient, Favorite, ShoppingList, IngredientInRecipe
-from .permissions import AuthorOrReadOnly
-from .mixins import RetriveAndListViewSet
-from .serializers import ShowRecipeSerializer, TagsSerializer, IngredientSerializer, AddRecipeSerializer, FavoriteSerializer, ShoppingListSerializer
-from rest_framework.permissions import SAFE_METHODS
-from rest_framework.decorators import action
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import permissions, status, viewsets
+from rest_framework.decorators import action
+from rest_framework.permissions import SAFE_METHODS
 from rest_framework.response import Response
-from rest_framework import status
+
 from .filters import IngredientSearchFilter, RecipeFilter
+from .mixins import RetriveAndListViewSet
+from .models import (Favorite, Ingredient, IngredientInRecipe, Recipe,
+                     ShoppingList, Tag)
+from .permissions import AuthorOrReadOnly
+from .serializers import (AddRecipeSerializer, FavoriteSerializer,
+                          IngredientSerializer, ShoppingListSerializer,
+                          ShowRecipeSerializer, TagsSerializer)
 from .utils import make_file
 
 
@@ -98,7 +99,7 @@ class RecipeShowViewSet(viewsets.ModelViewSet):
                     status=status.HTTP_400_BAD_REQUEST,
                 )
             shopping_cart = ShoppingList.objects.create(user=user,
-                                                       recipe=recipe)
+                                                        recipe=recipe)
             serializer = ShoppingListSerializer(
                 shopping_cart, context={"request": request}
             )
@@ -116,7 +117,8 @@ class RecipeShowViewSet(viewsets.ModelViewSet):
             permission_classes=[permissions.IsAuthenticated])
     def download_shopping_cart(self, request, *args, **kwargs):
         queryset = IngredientInRecipe.objects.filter(
-            recipe__shopping_cart__user=request.user).prefetch_related('ingredient')
+            recipe__shopping_cart__user=request
+            .user).prefetch_related('ingredient')
         value_for_file = self.get_value(queryset)
         return make_file(value_for_file)
 

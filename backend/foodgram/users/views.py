@@ -1,14 +1,12 @@
-from rest_framework import status, viewsets, permissions
-from rest_framework.response import Response
-from rest_framework.decorators import action
-
-from .models import User, Follow
-from .serializers import CustomUserSerializer, AddDeleteSubscriptionSerializer
 from django.shortcuts import get_object_or_404
+from rest_framework import permissions, status, viewsets
+from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import (
-    AllowAny, IsAuthenticated
-)
+
+from .models import Follow, User
+from .serializers import AddDeleteSubscriptionSerializer, CustomUserSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -50,6 +48,8 @@ class SubscribeAPIView(APIView):
         user = request.user
         author = get_object_or_404(User, id=id)
         Follow.objects.get_or_create(user=user, author=author)
-        serializer = AddDeleteSubscriptionSerializer(author, context={'request':
-                                                              request})
+        serializer = AddDeleteSubscriptionSerializer(author,
+                                                     context={
+                                                        'request': request
+                                                             })
         return Response(serializer.data, status=status.HTTP_201_CREATED)
