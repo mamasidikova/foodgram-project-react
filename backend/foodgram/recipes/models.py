@@ -137,10 +137,11 @@ class Favorite(models.Model):
     )
 
     class Meta:
-        constraints = [models.UniqueConstraint(
-            fields=['user', 'recipe'],
+        constraints = (models.UniqueConstraint(
+            fields=('user', 'recipe'),
             name='уникальные рецепты в избранном'
-        )]
+        ),
+        )
         ordering = ('-id',)
         verbose_name = 'Избранный рецепт'
         verbose_name_plural = 'Избранные рецепты'
@@ -164,10 +165,11 @@ class ShoppingList(models.Model):
     )
 
     class Meta:
-        constraints = [models.UniqueConstraint(
-            fields=['user', 'recipe'],
+        constraints = (models.UniqueConstraint(
+            fields=('user', 'recipe'),
             name='unique_shopping_cart'
-        )]
+        ),
+        )
         ordering = ('-id',)
         verbose_name = 'Список покупок'
         verbose_name_plural = 'Списки покупок'

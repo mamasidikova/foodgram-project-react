@@ -22,14 +22,12 @@ class CustomUserSerializer(UserSerializer):
 
     def get_is_subscribed(self, obj):
         request = self.context.get('request')
-        if not request or request.user.is_anonymous:
-            return False
-        return Follow.objects.filter(user=self.context['request'].user,
-                                     author=obj).exists()
+        return (request and not request.user.is_anonymous
+                and Follow.objects.filter(user=self.context['request'].user,
+                                          author=obj).exists())
 
 
 class ShowFollowingRecipeSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Recipe
         fields = ('id',
@@ -59,10 +57,9 @@ class AddDeleteSubscriptionSerializer(serializers.ModelSerializer):
         return ShowFollowingRecipeSerializer(recipes, many=True).data
 
     def get_is_subscribed(self, author):
-        if Follow.objects.filter(author=author,
-                                 user=self.context['request'].user).exists():
-            return True
-        return False
+        return Follow.objects.filter(author=author,
+                                     user=self.context['request']
+                                     .user).exists()
 
     def get_recipes_count(self, author):
         return author.recipes.count()

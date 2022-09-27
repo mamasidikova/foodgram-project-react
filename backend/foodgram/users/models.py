@@ -27,22 +27,17 @@ class User(AbstractUser):
         blank=False,
         verbose_name='Фамилия'
     )
-    password = models.CharField(
-        max_length=150,
-        blank=False,
-        verbose_name='Пароль'
-    )
 
     USERNAME_FIELD = 'email'
 
     REQUIRED_FIELDS = ('first_name', 'last_name', 'username', 'password')
 
-    def __str__(self):
-        return self.username
-
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = "Пользователи"
+
+    def __str__(self):
+        return self.username
 
 
 class Follow(models.Model):
@@ -64,13 +59,13 @@ class Follow(models.Model):
     class Meta:
         verbose_name = 'Подписка'
         verbose_name_plural = 'Подписки'
-        ordering = ['-id']
-        constraints = [
+        ordering = ('-id',)
+        constraints = (
             models.UniqueConstraint(
-                fields=['user', 'author'],
+                fields=('user', 'author'),
                 name='уникальные подписки'
-            )
-        ]
+            ),
+        )
 
     def __str__(self):
         return f'Пользователь {self.user} -> автор {self.author}'

@@ -16,6 +16,10 @@ class RecipeFilter(filters.FilterSet):
     tags = AllValuesMultipleFilter(field_name="tags__slug")
     author = AllValuesMultipleFilter(field_name="author__id")
 
+    class Meta:
+        model = Recipe
+        fields = ("tags__slug", "is_favorited", "is_in_shopping_cart")
+
     def filter_is_favorited(self, queryset, name, value):
         user = self.request.user
         if value:
@@ -27,10 +31,6 @@ class RecipeFilter(filters.FilterSet):
         if value:
             return Recipe.objects.filter(shopping_cart__user=user)
         return queryset
-
-    class Meta:
-        model = Recipe
-        fields = ["tags__slug", "is_favorited", "is_in_shopping_cart"]
 
 
 class IngredientSearchFilter(SearchFilter):

@@ -12,12 +12,12 @@ from .serializers import AddDeleteSubscriptionSerializer, CustomUserSerializer
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = CustomUserSerializer
-    permission_classes = [AllowAny]
+    permission_classes = (AllowAny,)
 
     @action(
         detail=False,
-        methods=['get'],
-        permission_classes=(IsAuthenticated, )
+        methods=('get',),
+        permission_classes=(IsAuthenticated,)
     )
     def me(self, request):
         serializer = self.get_serializer(self.request.user)
@@ -26,7 +26,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class SubscriptionsList(viewsets.ModelViewSet):
     serializer_class = AddDeleteSubscriptionSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
         user = self.request.user
@@ -34,7 +34,7 @@ class SubscriptionsList(viewsets.ModelViewSet):
 
 
 class SubscribeAPIView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = (permissions.IsAuthenticated,)
 
     def delete(self, request, id):
         user = request.user

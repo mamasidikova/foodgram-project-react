@@ -58,18 +58,17 @@ class ShowRecipeSerializer(serializers.ModelSerializer):
                   'name', 'image', 'text', 'cooking_time'
                   )
 
+    def _get_is_state(self, obj, model):
+        request = self.context.get('request', None)
+        return (request and not request.user.is_anonymous
+                and model.objects.filter(recipe=obj,
+                                         user=request.user).exists())
+
     def get_is_favorited(self, obj):
-        request = self.context.get('request')
-        if not request or request.user.is_anonymous:
-            return False
-        return Favorite.objects.filter(recipe=obj, user=request.user).exists()
+        return self._get_is_state(obj, Favorite)
 
     def get_is_in_shopping_cart(self, obj):
-        request = self.context.get('request')
-        if not request or request.user.is_anonymous:
-            return False
-        return ShoppingList.objects.filter(recipe=obj,
-                                           user=request.user).exists()
+        return self._get_is_state(obj, ShoppingList)
 
 
 class ShowRecipeMinSerializer(serializers.ModelSerializer):
@@ -160,7 +159,6 @@ class AddRecipeSerializer(serializers.ModelSerializer):
         return recipe
 
     def update(self, instance, validated_data):
-        print(validated_data)
         if 'ingredient_to_recipe' in validated_data:
             ingredients = validated_data.pop('ingredient_to_recipe')
             instance.ingredients.clear()
