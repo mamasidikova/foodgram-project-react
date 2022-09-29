@@ -5,13 +5,13 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
 
-pdfmetrics.registerFont(TTFont('Verdana', 'Verdana.ttf'))
+pdfmetrics.registerFont(TTFont('DejaVuSerif', 'DejaVuSerif.ttf', 'UTF-8'))
 
 
 def make_file(data):
     buffer = io.BytesIO()
     file = canvas.Canvas(buffer)
-    file.setFont('Verdana', 8)
+    file.setFont('DejaVuSerif', 12)
     file.drawString(
         30,
         800,
