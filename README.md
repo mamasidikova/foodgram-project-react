@@ -13,7 +13,7 @@
 После установки docker включите сервис и добавьте его в автозапуск.
 
 ```bash
-sudo systemctl enable docker && sydo systemctl restart docker
+sudo systemctl enable docker && sudo systemctl restart docker
 ```
 
 ## Установка Foodgram
