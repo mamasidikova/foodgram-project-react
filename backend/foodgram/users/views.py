@@ -50,6 +50,6 @@ class SubscribeAPIView(APIView):
         Follow.objects.get_or_create(user=user, author=author)
         serializer = AddDeleteSubscriptionSerializer(author,
                                                      context={
-                                                        'request': request
-                                                             })
+                                                         'request': request
+                                                     })
         return Response(serializer.data, status=status.HTTP_201_CREATED)
