@@ -18,7 +18,7 @@ sudo systemctl enable docker && sudo systemctl restart docker
 
 ## Установка Foodgram
 
-Для установки Foodgram необходимо перейти по ссылке [github link](git@github.com:mamasidikova/foodgram-project-react.git), и запустить команды ниже.
+Для установки Foodgram необходимо перейти по ссылке [github link](https://github.com/mamasidikova/foodgram-project-react), и запустить команды ниже.
 
 Если у вас нет гитхаба [github](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) на рабочей машине, требуется его установить.
 
@@ -56,9 +56,11 @@ sudo docker-compose exec web python3 manage.py load_ingredients data/ingredients
 ## Готовый проект
 
 Доступен по адресу: 
+
 ```
 http://84.201.179.151/
 http://84.201.179.151/admin
+
 ```
 Учётные данные для авторизации в админке:
 ```
