@@ -8,7 +8,7 @@
 ## Установка зависимостей
 Для установки компонентов у вас должна быть машина на linux и docker [docker](https://www.docker.com/).
 
-[HOWTO](https://docs.docker.com/engine/install/) for installing docker.
+[HOWTO](https://docs.docker.com/engine/install/) для установки docker.
 
 После установки docker включите сервис и добавьте его в автозапуск.
 
