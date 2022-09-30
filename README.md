@@ -23,7 +23,7 @@ sudo systemctl enable docker && sudo systemctl restart docker
 Если у вас нет гитхаба [github](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) на рабочей машине, требуется его установить.
 
 ```bash
-git clone git@github.com:mamasidikova/foodgram-project-react.git
+git clone https://github.com/mamasidikova/foodgram-project-react
 
 cd foodgram-project-react/infra
 
