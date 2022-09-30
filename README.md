@@ -1,4 +1,6 @@
-[![Django-app workflow](https://github.com/mamasidikova/foodgram-project-react/actions/workflows/main.yml/badge.svg)](https://github.com/mamasidikova/foodgram-project-react/actions/workflows/main.yml)
+# CI/CD для проекта Foodgram
+
+[![Django-app workflow](https://github.com/DeffronMax/foodgram-project-react/actions/workflows/main.yml/badge.svg)](https://github.com/DeffronMax/foodgram-project-react/actions/workflows/main.yml)
 
 # Foodgram
 Это сервис, где вы можете создавать свои собственные рецепты, подписываться на других пользователей, добавлять рецепты в избранные рецепты, добавлять рецепты в корзину и скачивать список ингредиентов с их количеством.
@@ -54,8 +56,12 @@ sudo docker-compose exec web python3 manage.py load_ingredients data/ingredients
 ## Готовый проект
 
 Доступен по адресу: 
+```
 http://84.201.179.151/
 http://84.201.179.151/admin
+```
 Учётные данные для авторизации в админке:
+```
 Логин: soche@list.ru
 Пароль: elephant
+```
