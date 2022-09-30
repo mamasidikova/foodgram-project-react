@@ -42,7 +42,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: ./backend
+          context: ./backend/foodgram
           tags: mamasidikova/foodgram_backend:latest
   
   build_frontend_and_push_to_docker_hub:
